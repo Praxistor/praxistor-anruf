@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Anruf starten</title>
+<style>
+  :root{color-scheme:light dark}
+  body{margin:0;min-height:100vh;display:grid;place-items:center;background:#F2F2F7;color:#000;font:18px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;text-align:center;padding:24px}
+  @media (prefers-color-scheme:dark){body{background:#000;color:#fff}}
+  .nr{font-size:1.5rem;font-weight:700;letter-spacing:.02em;margin:6px 0 22px}
+  a.b{display:inline-block;padding:18px 34px;border-radius:18px;background:#34C759;color:#fff;font-weight:700;font-size:1.3rem;text-decoration:none}
+  small{display:block;margin-top:22px;color:#8E8E93}
+</style>
+</head>
+<body>
+<div id="m">Keine Nummer übergeben.</div>
+<script>
+  var n = decodeURIComponent(location.hash.slice(1)).replace(/[^\d+]/g, "");
+  var m = document.getElementById("m");
+  if (n.length > 4) {
+    m.innerHTML = '<div>Anruf an</div><div class="nr"></div><a class="b" href="tel:' + n + '">Jetzt anrufen</a><small>Nach dem Anruf dieses Fenster schließen und in der Zentrale das Ergebnis tippen.</small>';
+    m.querySelector(".nr").textContent = n;
+    setTimeout(function () { location.href = "tel:" + n; }, 150);
+  }
+</script>
+</body>
+</html>
