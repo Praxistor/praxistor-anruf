@@ -18,8 +18,23 @@
 <script>
   var n = decodeURIComponent(location.hash.slice(1)).replace(/[^\d+]/g, "");
   var m = document.getElementById("m");
+  var weg = false;
+
+  // Fenster schließen, sobald man vom Telefon zurückkommt (so landet man direkt wieder in der Zentrale)
+  function schliessen() {
+    try { window.close(); } catch (e) {}
+    setTimeout(function () {
+      m.innerHTML = "<div>Fertig.</div><small>Dieses Fenster kann geschlossen werden.</small>";
+    }, 400);
+  }
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) { weg = true; }
+    else if (weg) { schliessen(); }
+  });
+  window.addEventListener("pageshow", function (e) { if (e.persisted && weg) { schliessen(); } });
+
   if (n.length > 4) {
-    m.innerHTML = '<div>Anruf an</div><div class="nr"></div><a class="b" href="tel:' + n + '">Jetzt anrufen</a><small>Nach dem Anruf dieses Fenster schließen und in der Zentrale das Ergebnis tippen.</small>';
+    m.innerHTML = '<div>Anruf an</div><div class="nr"></div><a class="b" href="tel:' + n + '">Jetzt anrufen</a><small>Nach dem Anruf schließt sich dieses Fenster von selbst.</small>';
     m.querySelector(".nr").textContent = n;
     setTimeout(function () { location.href = "tel:" + n; }, 150);
   }
