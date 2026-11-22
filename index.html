@@ -18,27 +18,10 @@
 <script>
   var n = decodeURIComponent(location.hash.slice(1)).replace(/[^\d+]/g, "");
   var m = document.getElementById("m");
-  var gestartet = false, zu = false;
-
-  // Sofort wieder zumachen: Fenster schließen; klappt das nicht, auf eine leere Seite wechseln und zurück
-  // Nur schließen versuchen, nie zurücknavigieren (das lud die Zentrale neu)
-  function weg() {
-    if (zu) { return; }
-    zu = true;
-    try { window.close(); } catch (e) {}
-    setTimeout(function () { m.innerHTML = "<div>Anruf gestartet.</div><small>Dieses Fenster schließen, dann bist du wieder in der Zentrale.</small>"; }, 300);
-  }
-
   if (n.length > 4) {
-    m.innerHTML = '<div>Anruf an</div><div class="nr"></div><a class="b" href="tel:' + n + '">Jetzt anrufen</a>';
+    m.innerHTML = '<div>Anruf an</div><div class="nr"></div><a class="b" href="tel:' + n + '">Jetzt anrufen</a><small>Nach dem Anruf einfach zurück wischen.</small>';
     m.querySelector(".nr").textContent = n;
-    // Anruf sofort auslösen, danach schnell wieder schließen
-    gestartet = true; location.href = "tel:" + n;
-    setTimeout(weg, 450);
-    setTimeout(weg, 1500);
-    document.addEventListener("visibilitychange", function () { if (gestartet && !document.hidden) { weg(); } });
-    window.addEventListener("pageshow", function () { if (gestartet) { weg(); } });
-    window.addEventListener("focus", function () { if (gestartet) { setTimeout(weg, 200); } });
+    setTimeout(function () { location.href = "tel:" + n; }, 30);
   } else {
     m.textContent = "Keine Nummer übergeben.";
   }
