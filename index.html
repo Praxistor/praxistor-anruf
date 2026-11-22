@@ -21,14 +21,12 @@
   var gestartet = false, zu = false;
 
   // Sofort wieder zumachen: Fenster schließen; klappt das nicht, auf eine leere Seite wechseln und zurück
+  // Nur schließen versuchen, nie zurücknavigieren (das lud die Zentrale neu)
   function weg() {
     if (zu) { return; }
     zu = true;
     try { window.close(); } catch (e) {}
-    setTimeout(function () {
-      m.innerHTML = "<div>Fertig.</div><small>Dieses Fenster kann geschlossen werden.</small>";
-      try { history.back(); } catch (e) {}
-    }, 350);
+    setTimeout(function () { m.innerHTML = "<div>Anruf gestartet.</div><small>Dieses Fenster schließen, dann bist du wieder in der Zentrale.</small>"; }, 300);
   }
 
   if (n.length > 4) {
