@@ -35,9 +35,9 @@
     m.innerHTML = '<div>Anruf an</div><div class="nr"></div><a class="b" href="tel:' + n + '">Jetzt anrufen</a>';
     m.querySelector(".nr").textContent = n;
     // Anruf sofort auslösen, danach schnell wieder schließen
-    setTimeout(function () { gestartet = true; location.href = "tel:" + n; }, 30);
-    setTimeout(weg, 1100);
-    setTimeout(weg, 3500);
+    gestartet = true; location.href = "tel:" + n;
+    setTimeout(weg, 450);
+    setTimeout(weg, 1500);
     document.addEventListener("visibilitychange", function () { if (gestartet && !document.hidden) { weg(); } });
     window.addEventListener("pageshow", function () { if (gestartet) { weg(); } });
     window.addEventListener("focus", function () { if (gestartet) { setTimeout(weg, 200); } });
